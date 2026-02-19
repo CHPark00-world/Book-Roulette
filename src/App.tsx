@@ -1,5 +1,7 @@
+import RootRoute from './rootRoute';
+
 function App() {
-  return <div>asd</div>;
+  return <RootRoute />;
 }
 
 export default App;
