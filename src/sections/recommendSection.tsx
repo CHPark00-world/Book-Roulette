@@ -1,4 +1,17 @@
+import { useEffect, useState } from 'react';
+import { searchBooks } from '../api/aladinApi';
+
 export default function recommendSection() {
+  const [books, setBooks] = useState([]);
+
+  useEffect(() => {
+    searchBooks('소설').then((items) => {
+      setBooks(items);
+    });
+  }, []);
+
+  console.log(books);
+
   return (
     <main
       className="bg-primary py-32 text-center text-white"
@@ -13,7 +26,7 @@ export default function recommendSection() {
         <h2 className="text-5xl font-bold">추천 책장</h2>
         <div>{/* 이곳은 추천책 한권이 올 곳 */}</div>
       </div>
-      <div>{/* 이곳은 추천책 리스트가 올 곳 */}</div>
+      <div></div>
     </main>
   );
 }
