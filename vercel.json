@@ -1,0 +1,3 @@
+{
+  "rewrites": [{ "source": "/api/aladin/(.*)", "destination": "/api/aladin" }]
+}
