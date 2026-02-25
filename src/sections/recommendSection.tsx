@@ -1,21 +1,14 @@
-import { useEffect, useState } from 'react';
-import { searchBooks } from '../api/aladinApi';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import type { Book } from '../types/book';
 import { ArrowRight } from 'lucide-react';
 
-export default function recommendSection() {
-  const [books, setBooks] = useState<Book[]>([]);
+interface Props {
+  books: Book[];
+}
+
+export default function recommendSection({ books }: Props) {
   const featuredBook = books[2];
-
-  useEffect(() => {
-    searchBooks('역사').then((items) => {
-      setBooks(items);
-    });
-  }, []);
-
-  console.log(books);
 
   return (
     <main
