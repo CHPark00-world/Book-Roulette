@@ -9,7 +9,6 @@ interface Props {
 export default function bottomBanner({ books }: Props) {
   const book1 = books[12];
   const book2 = books[15];
-  console.log(books);
 
   return (
     <section className="relative h-100 w-full overflow-hidden bg-[#1a1a3e]">

@@ -58,7 +58,7 @@ export default function recommendSection({ books }: Props) {
           modules={[]}
           slidesPerView={5}
           spaceBetween={20}
-          loop
+          loop={false}
         >
           {books.map((book: any) => (
             <SwiperSlide key={book.isbn} className="flex flex-col pt-10">
