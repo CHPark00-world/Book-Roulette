@@ -1,4 +1,4 @@
-import Header from '../components/header';
+import Header from '../component/common/header';
 import HeroSection from '../sections/heroSection';
 import CommunitySection from '../sections/communitySection';
 import RecommendSection from '../sections/recommendSection';
