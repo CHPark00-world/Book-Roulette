@@ -39,7 +39,12 @@ export default function signUpTermsModal({ onClose }: ModalProps) {
 
   return (
     <>
-      <div onMouseDown={onClose} className="fixed inset-0 z-50 bg-black/50">
+      <div
+        onMouseDown={(e) => {
+          if (e.button === 0) onClose();
+        }}
+        className="fixed inset-0 z-50 bg-black/50"
+      >
         <div
           onMouseDown={(e) => e.stopPropagation()}
           className="fixed top-[30%] left-[50%] mx-auto my-20 inline-block w-92.5 translate-x-[-50%] translate-y-[-50%]"

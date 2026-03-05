@@ -1,28 +1,47 @@
 import { X } from 'lucide-react';
+import { useLoginForm } from '../../hooks/useLoginForm';
 
 interface ModalProps {
   onClose: () => void;
 }
 
 export default function loginModal({ onClose }: ModalProps) {
+  const { email, setEmail, password, setPassword, handleLogin } =
+    useLoginForm(onClose);
+
   return (
-    <div onClick={onClose} className="fixed inset-0 z-50 bg-black/50">
+    <div
+      onMouseDown={(e) => {
+        if (e.button === 0) onClose();
+      }}
+      className="fixed inset-0 z-50 bg-black/50"
+    >
       <div
-        onClick={(e) => e.stopPropagation()}
+        onMouseDown={(e) => e.stopPropagation()}
         className="fixed top-[30%] left-[50%] mx-auto my-20 inline-block w-92.5 translate-x-[-50%] translate-y-[-50%]"
       >
-        <form className="rounded bg-white px-6 py-4">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleLogin();
+          }}
+          className="rounded bg-white px-6 py-4"
+        >
           <X onClick={onClose} className="ml-auto block cursor-pointer" />
           <h2 className="flex justify-center pb-5 text-3xl font-bold">
             로그인
           </h2>
           <div className="flex flex-col">
             <input
-              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              type="text"
               className="rounded border border-black/20 px-4 py-2 focus:outline-none"
               placeholder="이메일"
             />
             <input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               type="password"
               className="rounded border border-black/20 px-4 py-2 focus:outline-none"
               placeholder="비밀번호"
@@ -38,8 +57,11 @@ export default function loginModal({ onClose }: ModalProps) {
               로그인상태유지
             </label>
           </div>
-
-          <button className="border-primary text-primary hover:bg-primary w-full cursor-pointer rounded border py-2 text-center hover:text-white">
+          <button
+            type="submit"
+            onClick={handleLogin}
+            className="border-primary text-primary hover:bg-primary w-full cursor-pointer rounded border py-2 text-center hover:text-white"
+          >
             로그인
           </button>
           <div className="flex justify-between py-3">

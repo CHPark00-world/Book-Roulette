@@ -2,12 +2,16 @@ import { useEffect, useState } from 'react';
 import CommunityDropdown from '../navigation/communityDropdown';
 import LoginModal from '../modals/loginModal';
 import SignUpTermsModal from '../modals/signUpTermsModal';
+import useAuthStore from '../../store/authStore';
+import UserModal from '../modals/userModal';
 
 export default function header() {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [login, setLogin] = useState(false);
   const [signUp, setSignUp] = useState(false);
+  const [userMenu, setUserMenu] = useState(false);
+  const user = useAuthStore((state) => state.user);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -68,12 +72,21 @@ export default function header() {
           <a>책장 소식</a>
         </nav>
         <nav className="ml-auto flex items-center gap-6 text-sm">
-          <a onClick={() => setLogin(true)}>로그인</a>
-          <a onClick={() => setSignUp(true)}>회원가입</a>
+          {user ? (
+            <a onClick={() => setUserMenu(true)} className="pr-10 font-bold">
+              {user.name}님
+            </a>
+          ) : (
+            <>
+              <a onClick={() => setLogin(true)}>로그인</a>
+              <a onClick={() => setSignUp(true)}>회원가입</a>
+            </>
+          )}
         </nav>
       </header>
       {login && <LoginModal onClose={() => setLogin(false)} />}
       {signUp && <SignUpTermsModal onClose={() => setSignUp(false)} />}
+      {userMenu && <UserModal onClose={() => setUserMenu(false)} />}
     </>
   );
 }
