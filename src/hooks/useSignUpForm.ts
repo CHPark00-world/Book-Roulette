@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import profile from '../assets/default_profile.png';
+import { signUp } from '../services/authService';
 
 export const useSignUpForm = () => {
   const [email, setEmail] = useState('');
@@ -18,7 +19,8 @@ export const useSignUpForm = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [profileImage, setProfileImage] = useState(profile);
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
+    console.log('호출됨');
     const pattern = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
     const passwordPattern = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$/;
     if (!pattern.test(email)) {
@@ -62,6 +64,12 @@ export const useSignUpForm = () => {
       return;
     }
     setNameError('');
+    const { error } = await signUp(email, password, name);
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('회원가입 성공!');
+    }
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
