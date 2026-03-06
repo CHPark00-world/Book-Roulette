@@ -4,6 +4,7 @@ import LoginModal from '../modals/loginModal';
 import SignUpTermsModal from '../modals/signUpTermsModal';
 import useAuthStore from '../../store/authStore';
 import UserModal from '../modals/userModal';
+import { Link } from 'react-router-dom';
 
 export default function header() {
   const [scrolled, setScrolled] = useState(false);
@@ -57,7 +58,9 @@ export default function header() {
       <header
         className={`fixed top-0 z-10 flex w-full px-10 py-4 transition-colors duration-300 [&_a]:cursor-pointer ${scrolled ? 'text-primary bg-[#fdf6f0] [&_a]:hover:opacity-50' : 'bg-transparent text-black [&_a]:hover:text-red-700'}`}
       >
-        <h1 className="text-3xl">책장</h1>
+        <h1 className="cursor-pointer text-3xl">
+          <Link to="/">책장</Link>
+        </h1>
         <nav className="ml-10 flex items-center gap-16 text-sm">
           <div
             className="relative flex flex-col after:absolute after:top-full after:left-0 after:h-2 after:w-full after:content-['']"
