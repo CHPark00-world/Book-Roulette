@@ -8,7 +8,7 @@ const corsHeaders = {
 async function searchAladin(keyword: string) {
   const ttbKey = Deno.env.get('ALADIN_TTB_KEY');
   const query = encodeURIComponent(keyword);
-  const url = `http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=${ttbKey}&Query=${query}&QueryType=Keyword&MaxResults=2&SearchTarget=Book&output=js&Version=20131101&Cover=Big`;
+  const url = `http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=${ttbKey}&Query=${query}&QueryType=Title&MaxResults=3&SearchTarget=Book&output=js&Version=20131101&Cover=Big`;
 
   const res = await fetch(url);
   const text = await res.text();
@@ -55,6 +55,8 @@ serve(async (req) => {
       const parsed = JSON.parse(jsonMatch[0]);
       const keywords: string[] = parsed.keywords ?? [];
       const mood: string = parsed.mood ?? '';
+
+      console.log('AI 추출 키워드:', keywords);
 
       // 알라딘에서 실제 책 검색
       const results = await Promise.all(keywords.map(searchAladin));
