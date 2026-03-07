@@ -1,5 +1,10 @@
 @import 'tailwindcss';
 
+body {
+  margin: 0;
+  padding: 0;
+}
+
 @theme {
   --color-primary: #e0633c;
   --color-textColor: #d8d4d5;
