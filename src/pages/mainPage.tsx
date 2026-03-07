@@ -6,7 +6,7 @@ import RelayHeroSection from '../sections/relayHeroSection';
 import RecommendFeatureSection from '../sections/recommendFeatureSection';
 import RelayReviewSection from '../sections/relayReviewSection';
 import BottomBanner from '../sections/bottomBanner';
-import Footer from '../sections/footer';
+import Footer from '../component/common/footer';
 import { useEffect, useState } from 'react';
 import { searchBooks } from '../api/aladinApi';
 import type { Book } from '../types/book';
