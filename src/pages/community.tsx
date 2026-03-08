@@ -6,12 +6,14 @@ import Footer from '../component/common/footer';
 import supabase from '../lib/supabase';
 import WriteModal from '../component/modals/writeModal';
 import useAuthStore from '../store/authStore';
+import { useNavigate } from 'react-router-dom';
 
 export default function community() {
   const [activeTab, setActiveTab] = useState('자유 북토크');
   const [posts, setPosts] = useState<any[]>([]);
   const [isModal, setIsModal] = useState(false);
   const { user } = useAuthStore();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -83,7 +85,7 @@ export default function community() {
               key={post.id}
               className="flex cursor-pointer items-center justify-between border-b border-stone-200 py-5 hover:opacity-70"
             >
-              <div>
+              <div onClick={() => navigate(`/community/${post.id}`)}>
                 <p
                   className="mb-1 text-sm font-medium"
                   style={{ color: '#e0633c' }}
