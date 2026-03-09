@@ -18,6 +18,7 @@ export default function community() {
   const location = useLocation();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const fetchPosts = async () => {
       const { data } = await supabase
         .from('posts')
