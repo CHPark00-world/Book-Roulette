@@ -6,7 +6,7 @@ import Footer from '../component/common/footer';
 import supabase from '../lib/supabase';
 import WriteModal from '../component/modals/writeModal';
 import useAuthStore from '../store/authStore';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function community() {
   const [activeTab, setActiveTab] = useState('자유 북토크');
@@ -15,17 +15,19 @@ export default function community() {
   const { user } = useAuthStore();
   const navigate = useNavigate();
 
+  const location = useLocation();
+
   useEffect(() => {
     const fetchPosts = async () => {
       const { data } = await supabase
         .from('posts')
-        .select('*')
+        .select('*, likes(count), comments(count)')
         .eq('category', activeTab)
         .order('created_at', { ascending: false });
       setPosts(data ?? []);
     };
     fetchPosts();
-  }, [activeTab]);
+  }, [activeTab, location]);
 
   return (
     <div className="flex flex-col" style={{ backgroundColor: '#faf7f2' }}>
@@ -82,10 +84,11 @@ export default function community() {
         ) : (
           posts.map((post) => (
             <div
+              onClick={() => navigate(`/community/${post.id}`)}
               key={post.id}
               className="flex cursor-pointer items-center justify-between border-b border-stone-200 py-5 hover:opacity-70"
             >
-              <div onClick={() => navigate(`/community/${post.id}`)}>
+              <div>
                 <p
                   className="mb-1 text-sm font-medium"
                   style={{ color: '#e0633c' }}
@@ -97,11 +100,11 @@ export default function community() {
                   style={{ color: '#b0a8a0' }}
                 >
                   <span>{post.created_at.slice(0, 10)}</span>
-                  <span>♡ {post.likes}</span>
+                  <span>♡ {post.likes[0]?.count ?? 0}</span>
                 </div>
               </div>
               <span className="text-xs" style={{ color: '#b0a8a0' }}>
-                💬 0
+                💬 {post.comments[0]?.count ?? 0}
               </span>
             </div>
           ))
