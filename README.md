@@ -1,73 +1,47 @@
-# React + TypeScript + Vite
+# 책방 📚
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> AI가 추천해주는 나만의 책방, 다독러들과 함께하는 독서 커뮤니티
 
-Currently, two official plugins are available:
+🔗 **배포 링크**: [https://book-roulette.vercel.app](https://book-roulette.vercel.app)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 소개
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+책방은 AI와의 대화를 통해 나에게 맞는 책을 추천받고, 다른 독서 애호가들과 자유롭게 소통할 수 있는 웹 서비스입니다.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 기술 스택
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+| 분류     | 기술                         |
+| -------- | ---------------------------- |
+| Frontend | React, TypeScript, Vite      |
+| Styling  | Tailwind CSS                 |
+| 상태관리 | Zustand                      |
+| Backend  | Supabase (DB, Auth, Storage) |
+| AI       | Claude API (Anthropic)       |
+| API      | 알라딘 Open API              |
+| 배포     | Vercel                       |
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+## 주요 기능
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 🤖 AI 도서 추천
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
+- Claude AI와 스무고개 방식의 대화를 통해 취향에 맞는 책 추천
+- 알라딘 API 연동으로 책 상세 정보 제공
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+### 🔐 인증
+
+- 이메일 회원가입 / 로그인
+- Zustand를 활용한 전역 인증 상태 관리
+- 세션 유지
+
+### 💬 커뮤니티 (자유 북토크 / 릴레이 독후감 / 고유 필사)
+
+- 게시글 작성 / 삭제
+- 이미지 첨부 (Supabase Storage)
+- 좋아요 기능 (중복 방지)
+- 댓글 작성 / 삭제
