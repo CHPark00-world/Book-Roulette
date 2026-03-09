@@ -45,3 +45,9 @@
 - 이미지 첨부 (Supabase Storage)
 - 좋아요 기능 (중복 방지)
 - 댓글 작성 / 삭제
+
+## 스크린샷
+
+![메인 페이지](https://github.com/user-attachments/assets/8d0e2e5a-c99e-4937-8bde-82082495928b)
+![AI 추천](https://github.com/user-attachments/assets/10503b5e-e71d-4cbc-8b63-68549867c343)
+![커뮤니티](https://github.com/user-attachments/assets/0a0dab17-6667-4a5c-bf93-38a608294957)
