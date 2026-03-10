@@ -1,7 +1,7 @@
 import Header from '../component/common/header';
 import Library from '../assets/library.jpg';
 import { useState, useEffect } from 'react';
-import { BookOpen } from 'lucide-react';
+import { BookOpen, Search } from 'lucide-react';
 import Footer from '../component/common/footer';
 import supabase from '../lib/supabase';
 import WriteModal from '../component/modals/writeModal';
@@ -12,21 +12,28 @@ export default function community() {
   const [activeTab, setActiveTab] = useState('자유 북토크');
   const [posts, setPosts] = useState<any[]>([]);
   const [isModal, setIsModal] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const { user } = useAuthStore();
   const navigate = useNavigate();
 
   const location = useLocation();
 
+  const fetchPosts = async () => {
+    let query = supabase
+      .from('posts')
+      .select('*, likes(count), comments(count)')
+      .eq('category', activeTab)
+      .order('created_at', { ascending: false });
+
+    if (searchQuery) {
+      query = query.ilike('title', `%${searchQuery}%`);
+    }
+    const { data } = await query;
+    setPosts(data ?? []);
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
-    const fetchPosts = async () => {
-      const { data } = await supabase
-        .from('posts')
-        .select('*, likes(count), comments(count)')
-        .eq('category', activeTab)
-        .order('created_at', { ascending: false });
-      setPosts(data ?? []);
-    };
     fetchPosts();
   }, [activeTab, location]);
 
@@ -115,6 +122,9 @@ export default function community() {
         <input
           type="text"
           placeholder="Search"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && fetchPosts()}
           className="w-80 rounded border px-3 py-2 text-sm outline-none"
           style={{
             borderColor: 'var(--color-primary)',
@@ -122,6 +132,13 @@ export default function community() {
             color: '#3d3530',
           }}
         />
+        <button
+          onClick={fetchPosts}
+          className="cursor-pointer p-2"
+          style={{ color: '#e0633c' }}
+        >
+          <Search />
+        </button>
         <button
           onClick={() => {
             if (!user) {
