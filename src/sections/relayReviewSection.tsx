@@ -13,7 +13,7 @@ export default function relayReviewSection() {
         <h1 className="text-5xl font-bold">릴레이 독후감</h1>
         <Link
           className="text-primary hover:bg-primary border px-5 py-3 transition-all duration-300 hover:text-white"
-          to={ROUTES.COMMUNITY}
+          to={`${ROUTES.COMMUNITY}?tab=릴레이 독후감`}
         >
           릴레이 독후감 쓰러가기
         </Link>
