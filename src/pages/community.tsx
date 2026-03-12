@@ -1,33 +1,58 @@
 import Header from '../component/common/header';
 import Library from '../assets/library.jpg';
 import { useState, useEffect } from 'react';
-import { BookOpen } from 'lucide-react';
+import { BookOpen, Search } from 'lucide-react';
 import Footer from '../component/common/footer';
 import supabase from '../lib/supabase';
 import WriteModal from '../component/modals/writeModal';
 import useAuthStore from '../store/authStore';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
 export default function community() {
   const [activeTab, setActiveTab] = useState('자유 북토크');
   const [posts, setPosts] = useState<any[]>([]);
   const [isModal, setIsModal] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const { user } = useAuthStore();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   const location = useLocation();
 
+  const fetchPosts = async (tab?: string) => {
+    const currentTab = tab ?? activeTab;
+    let query = supabase
+      .from('posts')
+      .select('*, likes(count), comments(count)')
+      .eq('category', currentTab)
+      .order('created_at', { ascending: false });
+
+    if (searchQuery) {
+      query = query.ilike('title', `%${searchQuery}%`);
+    }
+    const { data } = await query;
+    setPosts(data ?? []);
+  };
+
   useEffect(() => {
-    const fetchPosts = async () => {
-      const { data } = await supabase
-        .from('posts')
-        .select('*, likes(count), comments(count)')
-        .eq('category', activeTab)
-        .order('created_at', { ascending: false });
-      setPosts(data ?? []);
-    };
-    fetchPosts();
-  }, [activeTab, location]);
+    const tab = searchParams.get('tab');
+    if (tab) {
+      setActiveTab(tab);
+      fetchPosts(tab);
+    } else {
+      fetchPosts();
+    }
+    window.scrollTo(0, 0);
+  }, [location, searchParams]);
+
+  const tabDescriptions: Record<string, string> = {
+    '자유 북토크':
+      '자유 북토크에서 책과 관련된 주제에 대해 자유롭게 소통하는 공간 입니다. \n다독러들과 다양한 책과 독서 경험에 관한 이야기를 나누어 보세요.',
+    '릴레이 독후감':
+      '자신의 독서 여정을 담아 간략한 독후감을 적어보고, \n다독러와 책 속 세계에 대한 각자의 해석과 감상을 자유롭게 공유해 보세요.',
+    '고유 필사':
+      '고유 필사 게시판은 인상깊게 읽은 책의 단락이나 문장을 \n직접 손글씨로 따라 쓰는 경험을 나누는 곳 입니다.',
+  };
 
   return (
     <div className="flex flex-col" style={{ backgroundColor: '#faf7f2' }}>
@@ -47,7 +72,10 @@ export default function community() {
         {['자유 북토크', '릴레이 독후감', '고유 필사'].map((tab) => (
           <button
             key={tab}
-            onClick={() => setActiveTab(tab)}
+            onClick={() => {
+              setActiveTab(tab);
+              fetchPosts(tab);
+            }}
             className="relative cursor-pointer pb-3 text-sm font-medium"
             style={{ color: activeTab === tab ? '#e0633c' : '#b0a8a0' }}
           >
@@ -71,9 +99,7 @@ export default function community() {
           className="text-sm leading-relaxed whitespace-pre-line"
           style={{ color: '#8c7b72' }}
         >
-          {
-            '자유 북토크에서 책과 관련된 주제에 대해 자유롭게 소통하는 공간 입니다. \n다독러들과 다양한 책과 독서 경험에 관한 이야기를 나누어 보세요.'
-          }
+          {tabDescriptions[activeTab]}
         </p>
       </div>
       <div className="mx-auto w-full max-w-3xl flex-1 px-4">
@@ -114,6 +140,9 @@ export default function community() {
         <input
           type="text"
           placeholder="Search"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && fetchPosts()}
           className="w-80 rounded border px-3 py-2 text-sm outline-none"
           style={{
             borderColor: 'var(--color-primary)',
@@ -121,6 +150,13 @@ export default function community() {
             color: '#3d3530',
           }}
         />
+        <button
+          onClick={() => fetchPosts()}
+          className="cursor-pointer p-2"
+          style={{ color: '#e0633c' }}
+        >
+          <Search />
+        </button>
         <button
           onClick={() => {
             if (!user) {
