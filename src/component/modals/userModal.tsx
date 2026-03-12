@@ -2,6 +2,7 @@ import { Bell } from 'lucide-react';
 import useAuthStore from '../../store/authStore';
 import supabase from '../../lib/supabase';
 import defaultProfile from '../../assets/default_profile.png';
+import { useNavigate } from 'react-router-dom';
 
 interface ModalProps {
   onClose: () => void;
@@ -10,6 +11,7 @@ interface ModalProps {
 export default function UserModal({ onClose }: ModalProps) {
   const user = useAuthStore((state) => state.user);
   const setUser = useAuthStore((state) => state.setUser);
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -34,7 +36,13 @@ export default function UserModal({ onClose }: ModalProps) {
           <p className="mt-4 font-bold">{user?.name}</p>
         </div>
         <div className="flex border-t border-black/10">
-          <button className="w-1/2 cursor-pointer py-4 hover:bg-black/5">
+          <button
+            onClick={() => {
+              navigate('/mypage');
+              onClose();
+            }}
+            className="w-1/2 cursor-pointer py-4 hover:bg-black/5"
+          >
             마이페이지
           </button>
           <button
