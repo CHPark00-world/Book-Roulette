@@ -31,7 +31,7 @@ export default function recommendFeatureSection() {
           </h1>
           <Link
             className="text-primary hover:bg-primary border px-4 py-3 transition-all duration-300 hover:text-white"
-            to={ROUTES.COMMUNITY}
+            to={ROUTES.BOOK_FILTER}
           >
             필터 책 추천받기
           </Link>
