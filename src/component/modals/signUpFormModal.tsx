@@ -70,7 +70,11 @@ export default function signUpFormModal({ onClose }: ModalProps) {
           <h2 className="mb-4 text-center text-2xl font-bold">회원가입</h2>
           <div className="flex justify-center py-4">
             <div ref={dropdownRef} className="relative">
-              <img src={profileImage} className="h-20 w-20 rounded-full" />
+              <img
+                src={profileImage}
+                alt="프로필 이미지"
+                className="h-20 w-20 rounded-full"
+              />
               <Camera
                 onClick={() => setShowDropdown(!showDropdown)}
                 className="absolute right-0 bottom-0 cursor-pointer rounded-full border border-black/20 bg-white p-1 opacity-50"

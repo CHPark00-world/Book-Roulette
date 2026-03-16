@@ -32,7 +32,11 @@ export default function UserModal({ onClose }: ModalProps) {
       >
         <div className="flex flex-col items-center px-6 pt-6 pb-4">
           <Bell className="ml-auto cursor-pointer opacity-50" />
-          <img src={defaultProfile} className="h-20 w-20 rounded-full" />
+          <img
+            src={defaultProfile}
+            alt="기본 이미지"
+            className="h-20 w-20 rounded-full"
+          />
           <p className="mt-4 font-bold">{user?.name}</p>
         </div>
         <div className="flex border-t border-black/10">

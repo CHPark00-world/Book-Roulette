@@ -27,11 +27,13 @@ export default function bottomBanner({ books }: Props) {
         <div className="relative h-87 w-87.5 rounded-full bg-white">
           <img
             src={book1?.cover}
+            alt="첫 번째 책 이미지"
             className="absolute top-8 left-8 h-44 w-32 -rotate-12 object-cover shadow-xl"
           />
 
           <img
             src={book2?.cover}
+            alt="두 번째 책 이미지"
             className="absolute top-4 right-8 h-48 w-36 rotate-6 object-cover shadow-xl"
           />
           <Link
