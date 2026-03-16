@@ -36,9 +36,9 @@ export default function BookFilterPage() {
     >
       <Header />
       <div className="mx-auto w-full max-w-5xl flex-1 px-4 py-16">
-        <h1 className="mb-8 text-2xl font-bold" style={{ color: '#3d3530' }}>
+        <h2 className="mb-8 text-2xl font-bold" style={{ color: '#3d3530' }}>
           책 추천 필터
-        </h1>
+        </h2>
 
         <div className="flex gap-8">
           {/* 왼쪽 필터 사이드바 */}
