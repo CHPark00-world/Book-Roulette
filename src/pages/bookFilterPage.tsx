@@ -40,9 +40,9 @@ export default function BookFilterPage() {
           책 추천 필터
         </h2>
 
-        <div className="flex gap-8">
+        <div className="flex flex-col gap-8 md:flex-row">
           {/* 왼쪽 필터 사이드바 */}
-          <div className="w-48 shrink-0">
+          <div className="w-full shrink-0 md:w-48">
             <div className="mb-6">
               <p
                 className="mb-2 text-sm font-medium"
@@ -50,7 +50,7 @@ export default function BookFilterPage() {
               >
                 카테고리
               </p>
-              <div className="flex flex-col gap-2">
+              <div className="flex gap-2 overflow-x-auto pb-2">
                 {CATEGORIES.map((cat) => (
                   <button
                     key={cat.id}
@@ -58,7 +58,7 @@ export default function BookFilterPage() {
                       setCategoryId(cat.id);
                       handleFetch(1, cat.id);
                     }}
-                    className="cursor-pointer rounded-full border px-4 py-1 text-left text-sm"
+                    className="shrink-0 cursor-pointer rounded-full border px-4 py-1 text-left text-sm"
                     style={{
                       borderColor:
                         categoryId === cat.id ? '#e0633c' : '#e0d8d0',
@@ -78,12 +78,12 @@ export default function BookFilterPage() {
               >
                 정렬
               </p>
-              <div className="flex flex-col gap-2">
+              <div className="flex gap-2 overflow-x-auto pb-2">
                 {SORT_OPTIONS.map((option) => (
                   <button
                     key={option.value}
                     onClick={() => setSort(option.value)}
-                    className="cursor-pointer rounded-full border px-4 py-1 text-left text-sm"
+                    className="shrink-0 cursor-pointer rounded-full border px-4 py-1 text-left text-sm"
                     style={{
                       borderColor:
                         sort === option.value ? '#e0633c' : '#e0d8d0',
@@ -180,7 +180,7 @@ export default function BookFilterPage() {
                 불러오는 중...
               </p>
             ) : (
-              <div className="grid grid-cols-4 gap-6">
+              <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
                 {books?.map((book) => (
                   <div key={book.isbn} className="flex flex-col">
                     <div className="mb-2 overflow-hidden rounded shadow">

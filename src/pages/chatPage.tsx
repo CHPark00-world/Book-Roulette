@@ -10,9 +10,9 @@ export default function ChatPage() {
       <Header />
 
       {/* 메인 영역 */}
-      <main className="mx-auto flex h-[calc(100vh-10rem)] w-full max-w-6xl flex-1 gap-10 px-8 py-10 pt-20">
+      <main className="mx-auto flex h-[calc(100vh-10rem)] w-full max-w-6xl flex-1 gap-10 px-4 py-10 pt-20 md:px-8">
         {/* 왼쪽 소개 패널 */}
-        <aside className="flex w-72 shrink-0 flex-col gap-8 pt-4">
+        <aside className="hidden w-72 shrink-0 flex-col gap-8 pt-4 md:flex">
           {/* 타이틀 */}
           <div>
             <p className="mb-2 text-xs tracking-widest text-amber-600 uppercase">
