@@ -68,7 +68,7 @@ export default function community() {
           <h1 className="text-3xl font-bold text-white">책장 커뮤니티</h1>
         </div>
       </div>
-      <div className="mt-8 flex justify-center gap-10 border-stone-200 px-4">
+      <div className="mt-8 flex justify-center gap-4 border-stone-200 px-4 md:gap-10">
         {['자유 북토크', '릴레이 독후감', '고유 필사'].map((tab) => (
           <button
             key={tab}
@@ -136,14 +136,14 @@ export default function community() {
           ))
         )}
       </div>
-      <div className="relative mx-auto mt-6 flex w-full max-w-3xl items-center justify-center px-4 pb-16">
+      <div className="mx-auto mt-6 flex w-full max-w-3xl flex-col items-center justify-center gap-2 px-4 pb-16 md:relative md:flex-row">
         <input
           type="text"
           placeholder="Search"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && fetchPosts()}
-          className="w-80 rounded border px-3 py-2 text-sm outline-none"
+          className="w-64 rounded border px-3 py-2 text-sm outline-none md:w-80"
           style={{
             borderColor: 'var(--color-primary)',
             backgroundColor: '#fff',
@@ -152,7 +152,7 @@ export default function community() {
         />
         <button
           onClick={() => fetchPosts()}
-          className="cursor-pointer p-2"
+          className="hidden cursor-pointer p-2 md:block"
           style={{ color: '#e0633c' }}
         >
           <Search />
@@ -165,7 +165,7 @@ export default function community() {
             }
             setIsModal(true);
           }}
-          className="absolute right-4 cursor-pointer rounded border px-5 py-2 text-sm"
+          className="cursor-pointer rounded border px-5 py-2 text-sm md:absolute md:right-4"
           style={{ borderColor: '#e0633c', color: '#e0633c' }}
         >
           글쓰기
