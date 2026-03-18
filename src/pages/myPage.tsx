@@ -29,7 +29,7 @@ export default function myPage() {
         <h1 className="mb-8 text-2xl font-bold" style={{ color: '#3d3530' }}>
           마이페이지
         </h1>
-        <div className="mb-8 flex gap-6 border-b border-stone-200">
+        <div className="mb-8 flex gap-3 border-b border-stone-200 md:gap-6">
           {['정보 수정', '내 글 조회', '회원 탈퇴'].map((tab) => (
             <button
               key={tab}

@@ -27,7 +27,10 @@ export default function PostDetailPage() {
     >
       <Header />
       <div className="mx-auto w-full max-w-3xl flex-1 px-4 py-16">
-        <h1 className="mb-2 text-2xl font-bold" style={{ color: '#e0633c' }}>
+        <h1
+          className="mb-2 text-xl font-bold md:text-2xl"
+          style={{ color: '#e0633c' }}
+        >
           {post.title}
         </h1>
         <div
