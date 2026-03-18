@@ -5,7 +5,7 @@ export default function communitySection() {
   return (
     <section className="flex h-80 flex-col items-center justify-center bg-white text-center">
       <div className="animate-[fadeInUp_1.8s_ease_forwards] py-4">
-        <h2 className="text-primary py-3 text-4xl">
+        <h2 className="text-primary py-3 text-2xl md:text-4xl">
           Shared Reading and Discussion
         </h2>
         <p className="py-4 text-[#505050]">

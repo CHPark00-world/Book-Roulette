@@ -5,12 +5,12 @@ import { ROUTES } from '../constants/routes';
 export default function relayHeroSection() {
   return (
     <section
-      className="flex h-120 w-full flex-col bg-cover bg-center px-10 py-15"
+      className="flex h-120 w-full flex-col bg-cover bg-center px-6 py-10 md:px-10 md:py-15"
       style={{ backgroundImage: `url(${book})`, backgroundAttachment: 'fixed' }}
     >
       <div className="flex flex-1 flex-col gap-2 py-4">
         <h2 className="text-textColor text-xl font-bold">책장 커뮤니티</h2>
-        <h1 className="py-4 text-4xl text-[#ffffff]">
+        <h1 className="py-4 text-2xl text-[#ffffff] md:text-4xl">
           릴레이 <strong>독후감</strong>
           <br /> 게시판 <strong>오픈!</strong>
         </h1>

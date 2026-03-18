@@ -10,7 +10,7 @@ export default function relayReviewSection() {
           인상깊은 책의 구절에 대한 <strong>감상</strong>을 간단하게{' '}
           <strong>기록</strong>해 보세요
         </h3>
-        <h1 className="text-5xl font-bold">릴레이 독후감</h1>
+        <h1 className="text-3xl font-bold md:text-5xl">릴레이 독후감</h1>
         <Link
           className="text-primary hover:bg-primary border px-5 py-3 transition-all duration-300 hover:text-white"
           to={`${ROUTES.COMMUNITY}?tab=릴레이 독후감`}
@@ -18,7 +18,7 @@ export default function relayReviewSection() {
           릴레이 독후감 쓰러가기
         </Link>
       </div>
-      <div className="flex w-full justify-between px-30">
+      <div className="flex w-full flex-wrap justify-center gap-6 px-6 md:justify-between md:px-30">
         {dummyReviews.map((review) => (
           <Link
             to={ROUTES.COMMUNITY}
