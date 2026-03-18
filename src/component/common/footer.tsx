@@ -3,7 +3,7 @@ import { RiKakaoTalkFill } from 'react-icons/ri';
 
 export default function footer() {
   return (
-    <footer className="flex w-full justify-between bg-orange-500 px-10 py-10 text-sm text-white">
+    <footer className="flex w-full flex-col justify-between bg-orange-500 px-6 py-10 text-sm text-white md:flex-row md:px-10">
       <div className="flex flex-col">
         <span className="">주식회사 책장</span>
         <span>서울 강남구 테헤란로 501</span>
