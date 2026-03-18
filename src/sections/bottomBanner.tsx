@@ -11,8 +11,8 @@ export default function bottomBanner({ books }: Props) {
   const book2 = books[15];
 
   return (
-    <section className="relative h-100 w-full overflow-hidden bg-[#1a1a3e]">
-      <div className="absolute top-1/2 left-12 -translate-y-1/2 text-white">
+    <section className="relative h-auto w-full overflow-hidden bg-[#1a1a3e] py-16 md:h-100 md:py-0">
+      <div className="relative left-6 text-white md:absolute md:top-1/2 md:left-12 md:-translate-y-1/2">
         <h1 className="text-4xl leading-tight font-bold">
           <span className="font-extrabold text-white">다독러와</span> 함께
           <br />
@@ -23,7 +23,7 @@ export default function bottomBanner({ books }: Props) {
         </p>
       </div>
 
-      <div className="absolute top-1/2 right-32 flex -translate-y-1/3 flex-col items-center">
+      <div className="relative mt-8 flex flex-col items-center md:absolute md:top-1/2 md:right-32 md:mt-0 md:-translate-y-1/3">
         <div className="relative h-87 w-87.5 rounded-full bg-white">
           <img
             src={book1?.cover}

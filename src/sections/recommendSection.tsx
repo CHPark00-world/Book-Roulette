@@ -21,24 +21,14 @@ export default function recommendSection({ books }: Props) {
         <p className="mb-4 animate-[fadeInUp_1.8s_ease_forwards] text-sm">
           금주의 <strong>추천 도서</strong>를 확인해 보세요.
         </p>
-        <h2 className="animate-[fadeInUp_1.8s_ease_forwards] text-5xl font-bold">
+        <h2 className="animate-[fadeInUp_1.8s_ease_forwards] text-3xl font-bold md:text-5xl">
           추천 책장
         </h2>
         {featuredBook && (
-          <div className="flex justify-between px-20 py-16">
-            <div className="w-1/2 animate-[fadeInUp_1.8s_ease_forwards]">
-              <h2 className="text-primary mb-2 inline-block bg-white px-2 py-2 text-4xl font-bold">
-                {featuredBook.title}
-              </h2>
-              <p className="mt-6 text-lg">{featuredBook.title}</p>
-              <p className="text-sm opacity-70"></p>
-              <p className="mt-5 px-20 text-start text-sm leading-relaxed">
-                {featuredBook.description}
-              </p>
-            </div>
+          <div className="flex flex-col items-center justify-between gap-8 px-6 py-16 md:flex-row md:px-20">
             <a
               href={featuredBook.link}
-              className="flex animate-[fadeInRight_1.8s_ease_forwards] flex-col items-center"
+              className="order-1 flex animate-[fadeInRight_1.8s_ease_forwards] flex-col items-center md:order-2"
             >
               <img
                 src={featuredBook.cover}
@@ -49,6 +39,16 @@ export default function recommendSection({ books }: Props) {
                 추천 도서 보러 가기 <ArrowRight />
               </p>
             </a>
+            <div className="order-2 w-full animate-[fadeInUp_1.8s_ease_forwards] md:order-1 md:w-1/2">
+              <h2 className="text-primary mb-2 inline-block bg-white px-2 py-2 text-4xl font-bold">
+                {featuredBook.title}
+              </h2>
+              <p className="mt-6 text-lg">{featuredBook.title}</p>
+              <p className="text-sm opacity-70"></p>
+              <p className="mt-5 px-20 text-start text-sm leading-relaxed">
+                {featuredBook.description}
+              </p>
+            </div>
           </div>
         )}
       </div>
@@ -56,9 +56,12 @@ export default function recommendSection({ books }: Props) {
         <Swiper
           className="mx-auto h-125 w-full"
           modules={[]}
-          slidesPerView={5}
+          slidesPerView={2}
           spaceBetween={20}
           loop={books.length > 5}
+          breakpoints={{
+            768: { slidesPerView: 5 },
+          }}
         >
           {books.map((book: any) => (
             <SwiperSlide key={book.isbn} className="flex flex-col pt-10">
