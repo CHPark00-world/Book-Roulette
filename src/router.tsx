@@ -6,6 +6,8 @@ import ChatPage from './pages/chatPage';
 import PostDetailPage from './pages/postDetailPage';
 import MyPage from './pages/myPage';
 import BookFilterPage from './pages/bookFilterPage';
+import NewsPage from './pages/newsPage';
+import NewsDetailPage from './pages/newsDetailPage';
 
 export const router = createBrowserRouter([
   { path: ROUTES.HOME, element: <MainPage /> },
@@ -14,4 +16,6 @@ export const router = createBrowserRouter([
   { path: ROUTES.CHAT, element: <ChatPage /> },
   { path: ROUTES.MYPAGE, element: <MyPage /> },
   { path: ROUTES.BOOK_FILTER, element: <BookFilterPage /> },
+  { path: ROUTES.NEWS, element: <NewsPage /> },
+  { path: ROUTES.NEWS_DETAIL, element: <NewsDetailPage /> },
 ]);

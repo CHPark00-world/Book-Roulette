@@ -34,7 +34,7 @@ export default function signUpFormModal({ onClose }: ModalProps) {
     profileImage,
     handleImageChange,
     handleImageDelete,
-  } = useSignUpForm();
+  } = useSignUpForm(onClose);
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
