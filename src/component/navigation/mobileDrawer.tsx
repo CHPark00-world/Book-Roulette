@@ -2,6 +2,7 @@ import { useState } from 'react';
 import useAuthStore from '../../store/authStore';
 import Profile from '../../assets/default_profile.png';
 import { Bell, ChevronDown, MoreVertical } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface Props {
   isOpen: boolean;
@@ -21,13 +22,10 @@ export default function MobileDrawer({
 
   return (
     <>
-      {/* 딤 배경 */}
       <div
         className={`fixed inset-0 z-20 bg-black/40 md:hidden ${isOpen ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
         onClick={onClose}
       />
-
-      {/* 서랍장 */}
       <div
         className={`fixed top-0 left-0 z-30 h-full w-[70vw] max-w-[320px] bg-white transition-transform duration-300 md:hidden ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
@@ -66,7 +64,6 @@ export default function MobileDrawer({
             </div>
           )}
         </div>
-        {/* 메뉴 리스트 */}
         <nav className="mt-2">
           <div>
             <button
@@ -84,17 +81,32 @@ export default function MobileDrawer({
               className={`overflow-hidden transition-all duration-300 ${communityOpen ? 'max-h-40' : 'max-h-0'}`}
             >
               <div className="flex flex-col gap-3 bg-gray-50 px-8 py-2 text-sm text-gray-600">
-                <a>자유게시판</a>
-                <a>독후감</a>
+                <Link to="/community?tab=자유 북토크" onClick={onClose}>
+                  자유게시판
+                </Link>
+                <Link to="/community?tab=릴레이 독후감" onClick={onClose}>
+                  릴레이 독후감
+                </Link>
+                <Link to="/community?tab=고유 필사" onClick={onClose}>
+                  고유 필사
+                </Link>
               </div>
             </div>
           </div>
-          <a className="text-primary flex w-full items-center border-b border-gray-100 px-6 py-4 font-medium">
+          <Link
+            to="/chat"
+            onClick={onClose}
+            className="text-primary flex w-full items-center border-b border-gray-100 px-6 py-4 font-medium"
+          >
             추천 책장
-          </a>
-          <a className="text-primary flex w-full items-center border-b border-gray-100 px-6 py-4 font-medium">
+          </Link>
+          <Link
+            to="/news"
+            onClick={onClose}
+            className="text-primary flex w-full items-center border-b border-gray-100 px-6 py-4 font-medium"
+          >
             책장 소식
-          </a>
+          </Link>
         </nav>
       </div>
       {isOpen && (
