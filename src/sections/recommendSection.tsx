@@ -45,7 +45,7 @@ export default function recommendSection({ books }: Props) {
               </h2>
               <p className="mt-6 text-lg">{featuredBook.title}</p>
               <p className="text-sm opacity-70"></p>
-              <p className="mt-5 px-20 text-start text-sm leading-relaxed">
+              <p className="mt-5 px-10 text-start text-sm leading-relaxed">
                 {featuredBook.description}
               </p>
             </div>
@@ -54,7 +54,7 @@ export default function recommendSection({ books }: Props) {
       </div>
       <div>
         <Swiper
-          className="mx-auto h-125 w-full"
+          className="mx-auto w-full"
           modules={[]}
           slidesPerView={2}
           spaceBetween={20}
@@ -64,21 +64,21 @@ export default function recommendSection({ books }: Props) {
           }}
         >
           {books.map((book: any) => (
-            <SwiperSlide key={book.isbn} className="flex flex-col pt-10">
+            <SwiperSlide key={book.isbn} className="flex h-auto flex-col pt-10">
               <a
                 href={book.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex cursor-pointer flex-col items-center"
+                className="flex cursor-pointer flex-col items-center overflow-hidden"
               >
                 <img
                   src={book.cover}
                   alt={book.title}
-                  className="h-80 w-full object-contain"
+                  className="h-60 w-full object-contain"
                   style={{ mixBlendMode: 'multiply' }}
                 />
-                <p className="mt-10 truncate text-sm">{book.title}</p>
-                <p className="mt-3 truncate text-xs opacity-70">
+                <p className="mt-2 text-sm">{book.title}</p>
+                <p className="mt-1 w-full truncate text-center text-xs opacity-70">
                   {book.author}
                 </p>
               </a>

@@ -1,7 +1,8 @@
 import Header from '../component/common/header';
-import Library from '../assets/library.jpg';
+import library from '../assets/library.jpg';
 import { newsData } from '../data/newsData';
 import { Link } from 'react-router-dom';
+import Footer from '../component/common/footer';
 
 export default function newsPage() {
   return (
@@ -9,7 +10,7 @@ export default function newsPage() {
       <Header />
       <div className="relative mt-16 h-60 w-full overflow-hidden">
         <img
-          src={Library}
+          src={library}
           className="h-full w-full object-cover"
           alt="도서관 이미지"
         />
@@ -43,6 +44,7 @@ export default function newsPage() {
           ))}
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
