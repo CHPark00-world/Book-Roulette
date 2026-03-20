@@ -65,14 +65,23 @@ export default function recommendSection({ books }: Props) {
         >
           {books.map((book: any) => (
             <SwiperSlide key={book.isbn} className="flex flex-col pt-10">
-              <img
-                src={book.cover}
-                alt={book.title}
-                className="h-80 w-full object-contain"
-                style={{ mixBlendMode: 'multiply' }}
-              />
-              <p className="mt-10 truncate text-sm">{book.title}</p>
-              <p className="mt-3 truncate text-xs opacity-70">{book.author}</p>
+              <a
+                href={book.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex cursor-pointer flex-col items-center"
+              >
+                <img
+                  src={book.cover}
+                  alt={book.title}
+                  className="h-80 w-full object-contain"
+                  style={{ mixBlendMode: 'multiply' }}
+                />
+                <p className="mt-10 truncate text-sm">{book.title}</p>
+                <p className="mt-3 truncate text-xs opacity-70">
+                  {book.author}
+                </p>
+              </a>
             </SwiperSlide>
           ))}
         </Swiper>

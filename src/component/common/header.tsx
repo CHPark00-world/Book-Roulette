@@ -87,8 +87,8 @@ export default function header() {
             <CommunityDropdown isOpen={isOpen} />
           </div>
 
-          <a>추천 책장</a>
-          <a>책장 소식</a>
+          <Link to="/chat">추천 책장</Link>
+          <Link to="/news">책장 소식</Link>
         </nav>
         <nav className="ml-auto hidden items-center gap-6 text-sm md:flex">
           {user ? (

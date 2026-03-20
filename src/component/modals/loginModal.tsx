@@ -59,7 +59,6 @@ export default function loginModal({ onClose }: ModalProps) {
           </div>
           <button
             type="submit"
-            onClick={handleLogin}
             className="border-primary text-primary hover:bg-primary w-full cursor-pointer rounded border py-2 text-center hover:text-white"
           >
             로그인

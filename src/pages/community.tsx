@@ -64,7 +64,7 @@ export default function community() {
           alt="도서관 이미지"
         />
         <div className="absolute inset-0 flex flex-col items-end justify-end bg-black/40 px-12 pb-8">
-          <p className="mb-1 text-sm text-white">다독러들과 함께 소통해요!</p>
+          <p className="mb-1 text-base text-white">다독러들과 함께 소통해요!</p>
           <h1 className="text-3xl font-bold text-white">책장 커뮤니티</h1>
         </div>
       </div>

@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import profile from '../assets/default_profile.png';
 import { signUp } from '../services/authService';
 
-export const useSignUpForm = () => {
+export const useSignUpForm = (onClose: () => void) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -66,9 +66,15 @@ export const useSignUpForm = () => {
     setNameError('');
     const { error } = await signUp(email, password, name);
     if (error) {
-      console.log(error);
-    } else {
-      console.log('회원가입 성공!');
+      if(error.message === 'User already registered') {
+        setEmailError('이미 가입된 이메일입니다.');
+      } else {
+          setEmailError('회원가입 중 오류가 발생했습니다.');
+      }
+    }
+     else {
+      alert('회원가입이 완료되었습니다!');
+      onClose();
     }
   };
 
