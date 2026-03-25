@@ -1,13 +1,16 @@
 import { useState,useEffect } from "react";
 import supabase from "../lib/supabase";
 import useAuthStore from "../store/authStore";
+import { useNavigate } from "react-router-dom";
+
 
 export function useMyPage () {
-  const {user} = useAuthStore();
+  const {user, logout} = useAuthStore();
   const [nickName, setNickName] = useState('');
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [myPosts, setMyPosts] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
   if (!user) return;
@@ -49,6 +52,41 @@ const handleUpdateProfile = async () => {
   setIsLoading(false);
 };
 
+const handleDeleteAccount = async () => {
+  if(!user) return;
+  const confirm = window.confirm('정말 탈퇴하시겠습니까? 모든 데이터가 삭제됩니다.');
+  if(!confirm) return;
+
+  const {data: {session}} = await supabase.auth.getSession();
+ 
+
+  const response = await fetch(
+    `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/delete-user`,
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+        'x-user-token': session?.access_token ?? '',
+      },
+    }
+  );
+
+  console.log('response status: ', response.status);
+  const responseData = await response.json();
+console.log('response data:', responseData);
+
+  if(response.ok) {
+      await supabase.from('post').delete().eq('user_id',user.id);
+      await supabase.from('profiles').delete().eq('id', user.id);
+      await supabase.auth.signOut();
+      logout();
+      navigate('/');
+      alert('탈퇴가 완료되었습니다.');
+  } else {
+    alert('탈퇴 중 오류가 발생했습니다.');
+  }
+} 
+
 return {
   user,
   nickName,
@@ -57,5 +95,6 @@ return {
   myPosts,
   isLoading,
   handleUpdateProfile,
+  handleDeleteAccount,
   };
 }

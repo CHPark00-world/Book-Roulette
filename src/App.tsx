@@ -6,6 +6,7 @@ import useAuthStore from './store/authStore';
 
 function App() {
   const setUser = useAuthStore((state) => state.setUser);
+  const setIsLoading = useAuthStore((state) => state.setIsLoading);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -16,6 +17,7 @@ function App() {
           name: session.user.user_metadata.name ?? '',
         });
       }
+      setIsLoading(false);
     });
 
     const {

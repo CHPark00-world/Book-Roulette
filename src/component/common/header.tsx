@@ -33,28 +33,18 @@ export default function header() {
   }, []);
 
   useEffect(() => {
-    if (login) {
+    if (login || signUp) {
       document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
     }
-
     return () => {
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
     };
-  }, [login]);
-
-  useEffect(() => {
-    if (signUp) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [signUp]);
+  }, [login, signUp]);
 
   return (
     <>
@@ -87,7 +77,17 @@ export default function header() {
             <CommunityDropdown isOpen={isOpen} />
           </div>
 
-          <Link to="/chat">추천 책장</Link>
+          <a
+            onClick={() => {
+              if (!user) {
+                alert('로그인이 필요한 서비스입니다.');
+                return;
+              }
+              window.location.href = '/chat';
+            }}
+          >
+            추천 책장
+          </a>
           <Link to="/news">책장 소식</Link>
         </nav>
         <nav className="ml-auto hidden items-center gap-6 text-sm md:flex">
@@ -115,7 +115,15 @@ export default function header() {
           setSignUp(true);
         }}
       />
-      {login && <LoginModal onClose={() => setLogin(false)} />}
+      {login && (
+        <LoginModal
+          onClose={() => setLogin(false)}
+          onSignUp={() => {
+            setLogin(false);
+            setSignUp(true);
+          }}
+        />
+      )}
       {signUp && <SignUpTermsModal onClose={() => setSignUp(false)} />}
       {userMenu && <UserModal onClose={() => setUserMenu(false)} />}
     </>
