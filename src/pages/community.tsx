@@ -136,27 +136,29 @@ export default function community() {
           ))
         )}
       </div>
-      <div className="mx-auto mt-6 flex w-full max-w-3xl flex-col items-center justify-center gap-2 px-4 pb-16 md:relative md:flex-row">
-        <input
-          type="text"
-          placeholder="Search"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && fetchPosts()}
-          className="w-64 rounded border px-3 py-2 text-sm outline-none md:w-80"
-          style={{
-            borderColor: 'var(--color-primary)',
-            backgroundColor: '#fff',
-            color: '#3d3530',
-          }}
-        />
-        <button
-          onClick={() => fetchPosts()}
-          className="hidden cursor-pointer p-2 md:block"
-          style={{ color: '#e0633c' }}
-        >
-          <Search />
-        </button>
+      <div className="mx-auto mt-6 flex w-full max-w-3xl items-center justify-between px-4 pb-16">
+        <div className="flex items-center gap-2">
+          <input
+            type="text"
+            placeholder="Search"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && fetchPosts()}
+            className="w-64 rounded border px-3 py-2 text-sm outline-none md:w-120"
+            style={{
+              borderColor: 'var(--color-primary)',
+              backgroundColor: '#fff',
+              color: '#3d3530',
+            }}
+          />
+          <button
+            onClick={() => fetchPosts()}
+            className="cursor-pointer p-2"
+            style={{ color: '#e0633c' }}
+          >
+            <Search />
+          </button>
+        </div>
         <button
           onClick={() => {
             if (!user) {
@@ -165,7 +167,7 @@ export default function community() {
             }
             setIsModal(true);
           }}
-          className="cursor-pointer rounded border px-5 py-2 text-sm md:absolute md:right-4"
+          className="cursor-pointer rounded border px-5 py-2 text-sm"
           style={{ borderColor: '#e0633c', color: '#e0633c' }}
         >
           글쓰기
@@ -175,7 +177,12 @@ export default function community() {
         <WriteModal
           activeTab={activeTab}
           onClose={() => setIsModal(false)}
-          onSuccess={(newPost) => setPosts((prev) => [newPost, ...prev])}
+          onSuccess={(newPost) =>
+            setPosts((prev) => [
+              { ...newPost, likes: [{ count: 0 }], comments: [{ count: 0 }] },
+              ...prev,
+            ])
+          }
         />
       )}
       <Footer />

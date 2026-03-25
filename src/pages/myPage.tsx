@@ -15,6 +15,7 @@ export default function myPage() {
     myPosts,
     isLoading,
     handleUpdateProfile,
+    handleDeleteAccount,
   } = useMyPage();
 
   if (!user) return null;
@@ -131,6 +132,7 @@ export default function myPage() {
               탈퇴 시 모든 데이터가 삭제되며 복구할 수 없어요.
             </p>
             <button
+              onClick={handleDeleteAccount}
               className="cursor-pointer rounded border px-5 py-2 text-sm"
               style={{ borderColor: '#b0a8a0', color: '#b0a8a0' }}
             >

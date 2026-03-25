@@ -20,7 +20,6 @@ export const useSignUpForm = (onClose: () => void) => {
   const [profileImage, setProfileImage] = useState(profile);
 
   const handleSignUp = async () => {
-    console.log('호출됨');
     const pattern = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
     const passwordPattern = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$/;
     if (!pattern.test(email)) {
@@ -68,7 +67,9 @@ export const useSignUpForm = (onClose: () => void) => {
     if (error) {
       if(error.message === 'User already registered') {
         setEmailError('이미 가입된 이메일입니다.');
-      } else {
+      } else if(error.message === 'Invalid email') {
+        setEmailError('유효하지 않은 이메일 형식입니다.');
+      }  else {
           setEmailError('회원가입 중 오류가 발생했습니다.');
       }
     }
