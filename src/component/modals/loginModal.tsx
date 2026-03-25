@@ -3,9 +3,10 @@ import { useLoginForm } from '../../hooks/useLoginForm';
 
 interface ModalProps {
   onClose: () => void;
+  onSignUp: () => void;
 }
 
-export default function loginModal({ onClose }: ModalProps) {
+export default function loginModal({ onClose, onSignUp }: ModalProps) {
   const { email, setEmail, password, setPassword, handleLogin } =
     useLoginForm(onClose);
 
@@ -64,7 +65,13 @@ export default function loginModal({ onClose }: ModalProps) {
             로그인
           </button>
           <div className="flex justify-between py-3">
-            <p className="hover:text-primary cursor-pointer hover:underline">
+            <p
+              onClick={() => {
+                onClose();
+                onSignUp();
+              }}
+              className="hover:text-primary cursor-pointer hover:underline"
+            >
               회원가입
             </p>
             <p className="hover:text-primary cursor-pointer hover:underline">

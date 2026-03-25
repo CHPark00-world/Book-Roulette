@@ -8,13 +8,28 @@ import MyPage from './pages/myPage';
 import BookFilterPage from './pages/bookFilterPage';
 import NewsPage from './pages/newsPage';
 import NewsDetailPage from './pages/newsDetailPage';
+import ProtectedRoute from './component/common/protectedRoute';
 
 export const router = createBrowserRouter([
   { path: ROUTES.HOME, element: <MainPage /> },
   { path: ROUTES.COMMUNITY, element: <CommunityPage /> },
   { path: ROUTES.COMMUNITY_POST, element: <PostDetailPage /> },
-  { path: ROUTES.CHAT, element: <ChatPage /> },
-  { path: ROUTES.MYPAGE, element: <MyPage /> },
+  {
+    path: ROUTES.CHAT,
+    element: (
+      <ProtectedRoute>
+        <ChatPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: ROUTES.MYPAGE,
+    element: (
+      <ProtectedRoute>
+        <MyPage />
+      </ProtectedRoute>
+    ),
+  },
   { path: ROUTES.BOOK_FILTER, element: <BookFilterPage /> },
   { path: ROUTES.NEWS, element: <NewsPage /> },
   { path: ROUTES.NEWS_DETAIL, element: <NewsDetailPage /> },
