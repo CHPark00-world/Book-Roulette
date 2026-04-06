@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 export function useMyPage () {
   const {user, logout} = useAuthStore();
+  const setUser = useAuthStore((state) => state.setUser);
   const [nickName, setNickName] = useState('');
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [myPosts, setMyPosts] = useState<any[]>([]);
@@ -21,8 +22,9 @@ export function useMyPage () {
       .select('*')
       .eq('id', user.id)
       .maybeSingle();
+
     if (data) {
-      setNickName(data.nickName ?? '');
+      setNickName(data.nickname ?? '');
       setAvatarUrl(data.avatar_url);
     }
   };
@@ -48,7 +50,10 @@ const handleUpdateProfile = async () => {
     .from('profiles')
     .upsert({ id: user.id, nickname: nickName, updated_at: new Date().toISOString() });
 
-  if (!error) alert('프로필이 업데이트되었습니다!');
+  if (!error) {
+    setUser({...user, nickname: nickName});
+    alert('프로필이 업데이트되었습니다!');
+  }
   setIsLoading(false);
 };
 
@@ -87,6 +92,35 @@ console.log('response data:', responseData);
   }
 } 
 
+const handleAvatarUpload = async (file:File) => {
+  if(!user) return;
+
+  const fileExt = file.name.split('.').pop();
+  const filePath = `private/${user.id}.${fileExt}`;
+
+  const {error: uploadError} = await supabase.storage
+  .from('avatars')
+  .upload(filePath,file, {upsert: true});
+
+  if(uploadError) {
+    alert('이미지 업로드 실패');
+    return;
+  }
+
+  const {data} = supabase.storage
+    .from('avatars')
+    .getPublicUrl(filePath);
+
+    const publicUrl = data.publicUrl;
+
+    await supabase
+      .from('profiles')
+      .upsert({id: user.id, avatar_url: publicUrl, updated_at: new Date().toISOString()});
+
+      setAvatarUrl(publicUrl);
+      setUser({...user, avatarUrl: publicUrl});
+}
+
 return {
   user,
   nickName,
@@ -96,5 +130,6 @@ return {
   isLoading,
   handleUpdateProfile,
   handleDeleteAccount,
+  handleAvatarUpload,
   };
 }

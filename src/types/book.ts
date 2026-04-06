@@ -5,4 +5,9 @@ export interface Book {
   cover: string;
   description: string;
   link: string;
+  publisher?: string;
+  pubDate?: string;
+  priceSales?: number;
+  priceStandard?: number;
+  customerReviewRank?: number;
 }

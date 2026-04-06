@@ -93,7 +93,7 @@ export default function header() {
         <nav className="ml-auto hidden items-center gap-6 text-sm md:flex">
           {user ? (
             <a onClick={() => setUserMenu(true)} className="pr-10 font-bold">
-              {user.name}님
+              {user.nickname || user.name}님
             </a>
           ) : (
             <>

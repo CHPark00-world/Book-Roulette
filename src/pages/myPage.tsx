@@ -2,7 +2,8 @@ import Header from '../component/common/header';
 import Footer from '../component/common/footer';
 import { useMyPage } from '../hooks/useMyPage';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import default_profile from '../assets/default_profile.png';
 
 export default function myPage() {
   const [activeTab, setActiveTab] = useState('정보 수정');
@@ -16,7 +17,10 @@ export default function myPage() {
     isLoading,
     handleUpdateProfile,
     handleDeleteAccount,
+    handleAvatarUpload,
   } = useMyPage();
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   if (!user) return null;
 
@@ -52,13 +56,24 @@ export default function myPage() {
         {/* 정보 수정 */}
         {activeTab === '정보 수정' && (
           <div className="rounded-lg border border-stone-200 p-6">
-            {avatarUrl && (
+            <div className="mb-4 flex items-center gap-4">
               <img
-                src={avatarUrl}
+                src={avatarUrl || default_profile}
                 alt="프로필"
-                className="mb-4 h-20 w-20 rounded-full object-cover"
+                onClick={() => fileInputRef.current?.click()}
+                className="h-20 w-20 cursor-pointer rounded-full object-cover"
               />
-            )}
+              <input
+                type="file"
+                ref={fileInputRef}
+                className="hidden"
+                accept="image/*"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) handleAvatarUpload(file);
+                }}
+              />
+            </div>
             <div className="mb-4">
               <label
                 className="mb-1 block text-xs"

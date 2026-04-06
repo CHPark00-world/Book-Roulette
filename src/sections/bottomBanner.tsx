@@ -7,8 +7,10 @@ interface Props {
 }
 
 export default function bottomBanner({ books }: Props) {
-  const book1 = books[12];
-  const book2 = books[15];
+  const book1 = books[Math.floor(Math.random() * books.length)];
+  const book2 = books[Math.floor(Math.random() * books.length)];
+
+  console.log(book1);
 
   return (
     <section className="relative h-auto w-full overflow-hidden bg-[#1a1a3e] py-16 md:h-100 md:py-0">
