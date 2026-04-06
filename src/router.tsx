@@ -9,6 +9,7 @@ import BookFilterPage from './pages/bookFilterPage';
 import NewsPage from './pages/newsPage';
 import NewsDetailPage from './pages/newsDetailPage';
 import ProtectedRoute from './component/common/protectedRoute';
+import BookDetailPage from './pages/bookDetailPage';
 
 export const router = createBrowserRouter([
   { path: ROUTES.HOME, element: <MainPage /> },
@@ -31,6 +32,7 @@ export const router = createBrowserRouter([
     ),
   },
   { path: ROUTES.BOOK_FILTER, element: <BookFilterPage /> },
+  { path: ROUTES.BOOK_DETAIL, element: <BookDetailPage /> },
   { path: ROUTES.NEWS, element: <NewsPage /> },
   { path: ROUTES.NEWS_DETAIL, element: <NewsDetailPage /> },
 ]);

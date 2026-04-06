@@ -1,14 +1,28 @@
-const API_KEY = import.meta.env.VITE_ALADIN_API_KEY;
+import  supabase  from '../lib/supabase';
+
+export async function fetchBookDetail (isbn: string) {
+  const {data, error} = await supabase.functions.invoke('search-books', {
+    body: {
+      type: 'detail',
+      isbn,
+    }
+  });
+  if(error) throw new Error('API 호출 실패!');
+  console.log('data:', data);
+  return data.item[0];
+}
 
 export async function searchBooks(query: string) {
-  const url = `/api/aladin/ItemSearch.aspx?ttbkey=${API_KEY}&Query=${query}&QueryType=Keyword&MaxResults=20&start=1&SearchTarget=Book&Cover=Big&Output=JS&Version=20131101`;
+  const { data, error } = await supabase.functions.invoke('search-books', {
+    body: {
+      type: 'search',
+      query,
+      maxResults: 20,
+      start: 1,
+    },
+  });
 
-  const response = await fetch(url);
-
-  if (!response.ok) {
-    throw new Error('API 호출 실패');
-  }
-  const data = await response.json();
+  if (error) throw new Error('API 호출 실패');
   return data.item;
 }
 
@@ -23,18 +37,18 @@ export async function fetchFilteredBooks({
   maxResults?: number;
   start?: number;
 }) {
-  const sortMap: Record<string, string> = {
-    'Bestseller': 'Bestseller',
-    'ItemNewAll': 'ItemNewAll',
-    'CustomerRating': 'Bestseller',
-    'PublishYear': 'ItemNewAll', 
-  };
-  
-  const queryType = sortMap[sort] ?? 'Bestseller';
-  const url = `/api/aladin/ItemList.aspx?ttbkey=${API_KEY}&QueryType=${queryType}&MaxResults=${maxResults}&start=${start}&SearchTarget=Book&CategoryId=${categoryId}&Cover=Big&Output=JS&Version=20131101`;
-  
-  const response = await fetch(url);
-  if (!response.ok) throw new Error('API 호출 실패');
-  const data = await response.json();
-  return {items: data.item, totalResults: data.totalResults};
+  const { data, error } = await supabase.functions.invoke('search-books', {
+    body: {
+      type: 'list',
+      categoryId,
+      sort,
+      maxResults,
+      start,
+    },
+  });
+
+
+
+  if (error) throw new Error('API 호출 실패');
+  return { items: data.item, totalResults: data.totalResults };
 }

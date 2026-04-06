@@ -9,12 +9,20 @@ function App() {
   const setIsLoading = useAuthStore((state) => state.setIsLoading);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
       if (session) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('nickname, avatar_url')
+          .eq('id', session.user.id)
+          .maybeSingle();
+
         setUser({
           id: session.user.id,
           email: session.user.email ?? '',
           name: session.user.user_metadata.name ?? '',
+          nickname: profile?.nickname ?? '',
+          avatarUrl: profile?.avatar_url ?? '',
         });
       }
       setIsLoading(false);
@@ -22,14 +30,8 @@ function App() {
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session) {
-        setUser({
-          id: session.user.id,
-          email: session.user.email ?? '',
-          name: session.user.user_metadata.name ?? '',
-        });
-      } else {
+    } = supabase.auth.onAuthStateChange((_event) => {
+      if (_event === 'SIGNED_OUT') {
         setUser(null);
       }
     });

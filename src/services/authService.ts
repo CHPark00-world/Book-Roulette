@@ -5,8 +5,17 @@ export const signUp = async (email: string, password: string, name: string) => {
     email,
     password,
     options: {
-      data: { name },
+      data: { name, nickname: name },
     },
   });
+
+  if(!error && data.user) {
+    await supabase.from('profiles').insert({
+      id: data.user.id,
+      nickname: name,
+      updated_at: new Date().toISOString(),
+    });
+  }
+
   return { data, error };
 };

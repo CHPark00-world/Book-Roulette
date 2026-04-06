@@ -11,8 +11,9 @@ export function useBookFilter() {
   const [endYear, setEndYear] = useState(2026);
   const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
-  const PAGE_SIZE = 20;
+  const PAGE_SIZE = 50;
 
+  
   const handleFetch = async (pageNum = 1, currentCategoryId = categoryId) => {
     setIsLoading(true);
     const {items, totalResults} = await fetchFilteredBooks({categoryId: currentCategoryId, sort, maxResults: PAGE_SIZE, start: (pageNum - 1) * PAGE_SIZE + 1});
@@ -31,9 +32,12 @@ export function useBookFilter() {
         return year >= startYear && year <= endYear;
       });
     }
-    setBooks(filtered);
+   
+   setBooks(filtered);
     setIsLoading(false);
   }
+
+  
   
 return {books, isLoading, categoryId, setCategoryId, sort, setSort, handleFetch, minRating, setMinRating, startYear, setStartYear, endYear, setEndYear, page, setPage, totalCount, PAGE_SIZE}
 }

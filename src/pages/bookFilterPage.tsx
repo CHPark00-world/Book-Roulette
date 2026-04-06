@@ -3,6 +3,7 @@ import Footer from '../component/common/footer';
 import { useBookFilter } from '../hooks/useBookFilter';
 import { CATEGORIES, SORT_OPTIONS } from '../constants/bookCategories';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function BookFilterPage() {
   const {
@@ -19,11 +20,8 @@ export default function BookFilterPage() {
     setStartYear,
     endYear,
     setEndYear,
-    page,
-    setPage,
-    totalCount,
-    PAGE_SIZE,
   } = useBookFilter();
+  const navigate = useNavigate();
 
   useEffect(() => {
     handleFetch();
@@ -185,9 +183,10 @@ export default function BookFilterPage() {
                   <div key={book.isbn} className="flex flex-col">
                     <div className="mb-2 overflow-hidden rounded shadow">
                       <img
+                        onClick={() => navigate(`/book_detail/${book.isbn}`)}
                         src={book.cover}
                         alt={book.title}
-                        className="w-full object-contain"
+                        className="w-full cursor-pointer object-contain"
                         style={{ aspectRatio: '3/4' }}
                       />
                     </div>
@@ -204,54 +203,6 @@ export default function BookFilterPage() {
                 ))}
               </div>
             )}
-            <div className="mt-8 flex justify-center gap-2">
-              {page > 1 && (
-                <button
-                  onClick={() => {
-                    setPage(page - 1);
-                    handleFetch(page - 1);
-                  }}
-                  className="cursor-pointer rounded border px-3 py-1 text-sm"
-                  style={{ borderColor: '#e0d8d0', color: '#b0a8a0' }}
-                >
-                  이전
-                </button>
-              )}
-              {Array.from(
-                { length: Math.min(5, Math.ceil(totalCount / PAGE_SIZE)) },
-                (_, i) => {
-                  const p = Math.max(1, page - 2) + i;
-                  return p;
-                },
-              ).map((p) => (
-                <button
-                  key={p}
-                  onClick={() => {
-                    setPage(p);
-                    handleFetch(p);
-                  }}
-                  className="cursor-pointer rounded border px-3 py-1 text-sm"
-                  style={{
-                    borderColor: page === p ? '#e0633c' : '#e0d8d0',
-                    color: page === p ? '#e0633c' : '#b0a8a0',
-                  }}
-                >
-                  {p}
-                </button>
-              ))}
-              {page < Math.ceil(totalCount / PAGE_SIZE) && (
-                <button
-                  onClick={() => {
-                    setPage(page + 1);
-                    handleFetch(page + 1);
-                  }}
-                  className="cursor-pointer rounded border px-3 py-1 text-sm"
-                  style={{ borderColor: '#e0d8d0', color: '#b0a8a0' }}
-                >
-                  다음
-                </button>
-              )}
-            </div>
           </div>
         </div>
       </div>

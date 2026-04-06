@@ -97,25 +97,26 @@ export default function signUpFormModal({ onClose }: ModalProps) {
           </div>
           <div className="flex flex-col">
             <div
-              className={`relative border border-b-0 ${emailError ? 'border-red-500' : 'border-black/20'}`}
+              className={`border ${emailError || passwordError || passworConfirmError ? 'border-red-500' : 'border-black/20'}`}
             >
-              <input
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 focus:outline-none"
-                placeholder="이메일"
-              />
-              {emailError && (
-                <p className="px-4 pb-2 text-sm text-red-500">{emailError}</p>
-              )}
-              {emailValid && (
-                <Check className="absolute top-3 right-3 text-blue-500" />
-              )}
-            </div>
-            <div className="border border-black/20">
-              <div
-                className={`relative border border-t-0 ${passwordError ? 'border-red-500' : 'border-black/20'}`}
-              >
+              {/* 이메일 */}
+              <div className="relative">
+                <input
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-4 py-3 focus:outline-none"
+                  placeholder="이메일"
+                />
+                {emailValid && (
+                  <Check className="absolute top-3 right-3 text-blue-500" />
+                )}
+                {emailError && (
+                  <p className="px-4 pb-2 text-sm text-red-500">{emailError}</p>
+                )}
+              </div>
+
+              {/* 비밀번호 */}
+              <div className="relative border-t border-black/20">
                 <input
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -131,16 +132,15 @@ export default function signUpFormModal({ onClose }: ModalProps) {
                     className="absolute top-3 right-3 cursor-pointer text-black/30"
                   />
                 )}
-
                 {passwordError && (
                   <p className="px-4 py-2 text-sm text-red-500">
                     {passwordError}
                   </p>
                 )}
               </div>
-              <div
-                className={`relative border-t border-black/20 ${passworConfirmError ? 'border border-red-500' : ''}`}
-              >
+
+              {/* 비밀번호 확인 */}
+              <div className="relative border-t border-black/20">
                 <input
                   value={passwordConfirm}
                   onChange={(e) => setPasswordConfirm(e.target.value)}
@@ -156,7 +156,6 @@ export default function signUpFormModal({ onClose }: ModalProps) {
                     className="absolute top-3 right-3 cursor-pointer text-black/30"
                   />
                 )}
-
                 {passworConfirmError && (
                   <p className="px-4 pb-2 text-sm text-red-500">
                     {passworConfirmError}
@@ -164,6 +163,7 @@ export default function signUpFormModal({ onClose }: ModalProps) {
                 )}
               </div>
             </div>
+
             <small className="py-2 text-center text-xs text-black/50">
               8자리 이상의 대소문자, 숫자, 특수문자를 사용해 주세요.
             </small>
