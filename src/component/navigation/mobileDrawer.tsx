@@ -2,7 +2,7 @@ import { useState } from 'react';
 import useAuthStore from '../../store/authStore';
 import Profile from '../../assets/default_profile.png';
 import { Bell, ChevronDown, MoreVertical } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface Props {
   isOpen: boolean;
@@ -19,6 +19,9 @@ export default function MobileDrawer({
 }: Props) {
   const [communityOpen, setCommunityOpen] = useState(false);
   const user = useAuthStore((state) => state.user);
+  const [showUserMenu, setShowUserMenu] = useState(false);
+  const navigate = useNavigate();
+  const logout = useAuthStore((state) => state.logout);
 
   return (
     <>
@@ -35,21 +38,52 @@ export default function MobileDrawer({
               <div className="mb-4 flex items-center justify-between">
                 <div className="flex h-14 w-14 items-center justify-center rounded-full bg-gray-300 text-3xl text-gray-400">
                   <img
-                    className="rounded-full"
-                    src={Profile}
-                    alt="기본 프로필 이미지"
+                    className="h-14 w-14 rounded-full object-cover"
+                    src={user.avatarUrl || Profile}
+                    alt="프로필 이미지"
                   />
                 </div>
                 <div className="flex gap-4 text-gray-400">
                   <span>
                     <Bell size={20} />
                   </span>
-                  <span>
-                    <MoreVertical size={20} />
-                  </span>
+                  <div className="relative">
+                    <span
+                      onClick={() => setShowUserMenu(!showUserMenu)}
+                      className="cursor-pointer"
+                    >
+                      <MoreVertical size={20} />
+                    </span>
+                    {showUserMenu && (
+                      <div className="absolute top-6 right-0 z-50 w-32 rounded bg-white shadow-md">
+                        <button
+                          onClick={() => {
+                            setShowUserMenu(false);
+                            onClose();
+                            navigate('/mypage');
+                          }}
+                          className="w-full px-4 py-3 text-left text-sm hover:bg-gray-50"
+                        >
+                          내 계정
+                        </button>
+                        <button
+                          onClick={() => {
+                            setShowUserMenu(false);
+                            onClose();
+                            logout();
+                          }}
+                          className="w-full px-4 py-3 text-left text-sm hover:bg-gray-50"
+                        >
+                          로그아웃
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-              <p className="font-bold text-gray-900">{user.name}</p>
+              <p className="font-bold text-gray-900">
+                {user.nickname || user.name}
+              </p>
               <p className="text-sm text-gray-500">{user.email}</p>
             </>
           ) : (

@@ -21,7 +21,7 @@ export const useSignUpForm = (onClose: () => void) => {
 
   const handleSignUp = async () => {
     const pattern = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
-    const passwordPattern = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$/;
+    const passwordPattern = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$/;
     if (!pattern.test(email)) {
       setEmailError('이메일을 정확히 입력하세요');
       setEmailValid(false);

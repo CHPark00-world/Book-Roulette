@@ -165,7 +165,7 @@ export default function signUpFormModal({ onClose }: ModalProps) {
             </div>
 
             <small className="py-2 text-center text-xs text-black/50">
-              8자리 이상의 대소문자, 숫자, 특수문자를 사용해 주세요.
+              8자리 이상의 영문자, 숫자, 특수문자를 사용해 주세요.
             </small>
           </div>
           <div className="mt-6">
