@@ -7,6 +7,7 @@ import supabase from '../lib/supabase';
 import WriteModal from '../component/modals/writeModal';
 import useAuthStore from '../store/authStore';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import default_profile from '../assets/default_profile.png';
 
 export default function community() {
   const [activeTab, setActiveTab] = useState('자유 북토크');
@@ -23,7 +24,9 @@ export default function community() {
     const currentTab = tab ?? activeTab;
     let query = supabase
       .from('posts')
-      .select('*, likes(count), comments(count)')
+      .select(
+        '*, likes(count), comments(count), profiles(nickname, avatar_url)',
+      )
       .eq('category', currentTab)
       .order('created_at', { ascending: false });
 
@@ -125,6 +128,12 @@ export default function community() {
                   className="flex gap-3 text-xs"
                   style={{ color: '#b0a8a0' }}
                 >
+                  <img
+                    src={post.profiles?.avatar_url || default_profile}
+                    alt="프로필"
+                    className="h-5 w-5 rounded-full object-cover"
+                  />
+                  <span>{post.profiles?.nickname ?? '익명'}</span>
                   <span>{post.created_at.slice(0, 10)}</span>
                   <span>♡ {post.likes[0]?.count ?? 0}</span>
                 </div>

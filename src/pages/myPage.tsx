@@ -4,6 +4,7 @@ import { useMyPage } from '../hooks/useMyPage';
 import { useNavigate } from 'react-router-dom';
 import { useState, useRef } from 'react';
 import default_profile from '../assets/default_profile.png';
+import { useMyLibrary } from '../hooks/useMyLibrary';
 
 export default function myPage() {
   const [activeTab, setActiveTab] = useState('정보 수정');
@@ -19,6 +20,8 @@ export default function myPage() {
     handleDeleteAccount,
     handleAvatarUpload,
   } = useMyPage();
+  const { records, isLoading: libraryLoading } = useMyLibrary();
+  const [libraryTab, setLibraryTab] = useState('전체');
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -35,7 +38,7 @@ export default function myPage() {
           마이페이지
         </h1>
         <div className="mb-8 flex gap-3 border-b border-stone-200 md:gap-6">
-          {['정보 수정', '내 글 조회', '회원 탈퇴'].map((tab) => (
+          {['정보 수정', '내 글 조회', '내 서재', '회원 탈퇴'].map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -136,6 +139,76 @@ export default function myPage() {
                   </span>
                 </div>
               ))
+            )}
+          </div>
+        )}
+
+        {/* 내 서재 */}
+        {activeTab === '내 서재' && (
+          <div>
+            <div className="mb-6 flex gap-2">
+              {['전체', '읽고 싶어요', '읽는 중', '다 읽었어요'].map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setLibraryTab(tab)}
+                  className="cursor-pointer rounded-full px-4 py-2 text-sm transition-colors"
+                  style={
+                    libraryTab === tab
+                      ? { backgroundColor: '#e0633c', color: 'white' }
+                      : { border: '1px solid #d6d0c8', color: '#b0a8a0' }
+                  }
+                >
+                  {tab}
+                </button>
+              ))}
+            </div>
+
+            {libraryLoading ? (
+              <p className="text-sm" style={{ color: '#b0a8a0' }}>
+                불러오는 중...
+              </p>
+            ) : (libraryTab === '전체'
+                ? records
+                : records.filter((r) => r.status === libraryTab)
+              ).length === 0 ? (
+              <p className="text-sm" style={{ color: '#b0a8a0' }}>
+                책이 없어요.
+              </p>
+            ) : (
+              <div className="grid grid-cols-3 gap-4 sm:grid-cols-4">
+                {(libraryTab === '전체'
+                  ? records
+                  : records.filter((r) => r.status === libraryTab)
+                ).map((record) => (
+                  <div key={record.isbn} className="flex flex-col gap-2">
+                    <img
+                      src={record.cover}
+                      alt={record.title}
+                      className="w-full rounded-md object-cover"
+                    />
+                    <span
+                      className={`w-fit rounded-full px-2 py-0.5 text-xs ${
+                        record.status === '읽고 싶어요'
+                          ? 'bg-stone-100 text-stone-500'
+                          : record.status === '읽는 중'
+                            ? 'bg-orange-100 text-orange-700'
+                            : 'bg-green-100 text-green-700'
+                      }`}
+                    >
+                      {record.status}
+                    </span>
+                    <p
+                      className="text-sm leading-tight font-medium"
+                      style={{ color: '#3d3530' }}
+                    >
+                      {record.title}
+                    </p>
+                    <p className="text-xs" style={{ color: '#b0a8a0' }}>
+                      {record.author}
+                    </p>
+                  </div>
+                ))}
+              </div>
             )}
           </div>
         )}

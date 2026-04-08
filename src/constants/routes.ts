@@ -8,4 +8,5 @@ export const ROUTES = {
   BOOK_DETAIL: '/book_detail/:isbn',
   NEWS: '/news',
   NEWS_DETAIL: '/news/:id',
+  MY_LIBRARY: '/my_library',
 };
